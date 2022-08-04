@@ -38,5 +38,4 @@ jobs:
           
       - name: Fail workflow if tests failed
         if: ${{ inputs.gitlab_test_job_status == 'failed' }}
-        run: core.setFailed()
-      
+        run: exit 1      
