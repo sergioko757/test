@@ -11,7 +11,14 @@ on:
         required: true
 
 jobs:
+  announce-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Announce status
+        run: echo  "${{ inputs.gitlab_pipeline }} status: ${{ inputs.gitlab_test_job_status }}"
+        
   create-an-issue:
+    if: ${{ inputs.gitlab_test_job_status == 'failed' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout staking-miner sources
@@ -21,7 +28,7 @@ jobs:
         run: echo ${{ inputs.gitlab_test_job_status }}
 
       - name: Create an issue
-        if: ${{ inputs.gitlab_test_job_status == 'failed' }}
+#         if: ${{ inputs.gitlab_test_job_status == 'failed' }}
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,5 +44,5 @@ jobs:
           search_existing: open
           
       - name: Fail workflow if tests failed
-        if: ${{ inputs.gitlab_test_job_status == 'failed' }}
+#         if: ${{ inputs.gitlab_test_job_status == 'failed' }}
         run: exit 1      
