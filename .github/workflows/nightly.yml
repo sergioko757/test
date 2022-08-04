@@ -6,6 +6,9 @@ on:
       gitlab_pipeline:
         description: 'Link to failed pipeline'
         required: true
+      gitlab_test_job_status:
+        description: 'GitLab test job status'
+        required: true
 
 jobs:
   create-an-issue:
@@ -13,6 +16,9 @@ jobs:
     steps:
       - name: Checkout staking-miner sources
         uses: actions/checkout@v3
+      
+      - name: Echo env
+        run: echo ${{ inputs.gitlab_test_job_status }}
 
       - name: Create an issue
         uses: JasonEtco/create-an-issue@v2
