@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Announce status
-        run: echo  "${{ inputs.gitlab_pipeline }} status: ${{ inputs.gitlab_test_job_status }}"
+        run: echo  ${{ inputs.gitlab_test_job_status }}
         
   create-an-issue:
     if: ${{ inputs.gitlab_test_job_status == 'failed' }}
